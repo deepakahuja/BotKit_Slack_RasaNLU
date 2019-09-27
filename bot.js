@@ -5,7 +5,7 @@
 // This is the main file for the BotkitWithSlackForMultiTeamApp bot.
 
 // Import Botkit's core features
-const { Botkit } = require('botkit');
+const { Botkit, BotkitConversation } = require('botkit');
 const { BotkitCMSHelper } = require('botkit-plugin-cms');
 
 // Import a platform-specific adapter for slack.
@@ -68,15 +68,6 @@ var rasamiddleware = require('botkit-rasa')({rasa_uri: 'http://localhost:5005/mo
 
 controller.middleware.receive.use(rasamiddleware.receive);
 
-controller.hears(async (message) => { return (message.intent.name === 'restaurant_search') }, 'message,direct_message', async(bot, message) => {
-    await bot.reply(message,'Are you looking for a restaurant? I can help you in that!!!');
-});
-
-
-controller.hears(async (message) => { return (message.intent.name === 'greet') }, 'message,direct_message', async(bot, message) => {
-    await bot.reply(message,'Hello!!!, How may I help you');
-});
-  
 
 if (process.env.cms_uri) {
     controller.usePlugin(new BotkitCMSHelper({
